@@ -17,9 +17,5 @@ export default {
     LeftColumn,
     MiddleColumn,
   },
-
-  data: () => ({
-    //
-  }),
 };
 </script>

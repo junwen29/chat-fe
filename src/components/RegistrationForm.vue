@@ -1,17 +1,22 @@
 <template>
-  <v-form ref="form" v-model="valid" lazy-validation>
+  <v-form ref="registerForm" v-model="valid" lazy-validation>
     <v-text-field
-      v-model="name"
+      v-model="user.name"
       :counter="15"
       :rules="nameRules"
       label="Display Name"
       required
     />
 
-    <v-text-field v-model="email" :rules="emailRules" label="E-mail" required />
+    <v-text-field
+      v-model="user.email"
+      :rules="emailRules"
+      label="E-mail"
+      required
+    />
 
     <v-text-field
-      v-model="password"
+      v-model="user.password"
       :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
       :rules="[passwordRules.required, passwordRules.min]"
       :type="showPassword ? 'text' : 'password'"
@@ -20,24 +25,21 @@
       hint="At least 8 characters"
       counter
       @click:append="showPassword = !showPassword"
-      required
     />
 
     <v-text-field
-      v-model="confirmationPassword"
+      v-model="user.confirmationPassword"
       :append-icon="showConfirmationPassword ? 'mdi-eye' : 'mdi-eye-off'"
-      :rules="[
-        confirmationPasswordRules.required,
-        confirmationPasswordRules.min,
-      ]"
+      :rules="[passwordRules.required, passwordConfirmationRule]"
       :type="showConfirmationPassword ? 'text' : 'password'"
       name="confirmationPassword"
-      label="Password"
+      label="Confirmation"
       hint="At least 8 characters"
       counter
       @click:append="showConfirmationPassword = !showConfirmationPassword"
-      required
     />
+
+    <v-spacer></v-spacer>
 
     <v-btn :disabled="!valid" color="success" class="mr-4" @click="validate">
       Validate
@@ -49,7 +51,12 @@
       Reset Validation
     </v-btn>
 
-    <v-btn color="secondary" class="mt-4" @click="submit">
+    <v-btn
+      color="secondary"
+      class="mt-4"
+      @click="handleSubmit"
+      :disabled="status.registering"
+    >
       Register
       <v-icon right dark> mdi-cloud-upload </v-icon>
     </v-btn>
@@ -57,47 +64,59 @@
 </template>
 
 <script>
+import { mapState, mapActions } from "vuex";
+
 export default {
   data: () => ({
     valid: true,
-    name: "",
+    user: {
+      name: "abc",
+      email: "abc@gmail.com",
+      password: "Password123",
+      confirmationPassword: "Password123",
+    },
     nameRules: [
       (v) => !!v || "Name is required",
       (v) => (v && v.length <= 10) || "Name must be less than 10 characters",
     ],
-    email: "",
     emailRules: [
       (v) => !!v || "E-mail is required",
       (v) => /.+@.+\..+/.test(v) || "E-mail must be valid",
     ],
     showPassword: false,
-    password: "Password",
     passwordRules: {
-      required: (value) => !!value || "Required.",
-      min: (v) => v.length >= 8 || "Min 8 characters",
+      required: (v) => !!v || "Required.",
+      min: (v) => (v && v.length >= 8) || "Min 8 characters",
     },
     showConfirmationPassword: false,
-    confirmationPassword: "Password",
-    confirmationPasswordRules: {
-      required: (value) => !!value || "Required.",
-      min: (v) => v.length >= 8 || "Min 8 characters",
-      passwordMatch: (v) =>
-        v !== this.password ||
-        `The password and confirmation password you entered don't match`,
-    },
+    submitted: false,
   }),
-
   methods: {
+    ...mapActions("account", ["register"]),
     validate() {
-      this.$refs.form.validate();
+      this.$refs.registerForm.validate();
     },
     reset() {
-      this.$refs.form.reset();
+      this.$refs.registerForm.reset();
     },
     resetValidation() {
-      this.$refs.form.resetValidation();
+      this.$refs.registerForm.resetValidation();
     },
-    submit() {},
+    handleSubmit(e) {
+      this.submitted = true;
+      const isValid = this.$refs.registerForm.validate();
+      if (isValid) {
+        this.register(this.user);
+      }
+      e.preventDefault();
+    },
+  },
+  computed: {
+    ...mapState("account", ["status"]),
+    passwordConfirmationRule() {
+      return () =>
+        this.user.password === this.user.confirmationPassword || "Password must match";
+    },
   },
 };
 </script>

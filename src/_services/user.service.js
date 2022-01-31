@@ -37,7 +37,7 @@ function logout() {
     localStorage.removeItem('user');
 }
 
-function register(user) {
+async function register(user) {
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
