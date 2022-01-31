@@ -1,29 +1,34 @@
 <template>
   <v-app>
     <v-main>
-      <v-container fluid ma-0 pa-0 fill-height>
-        <v-row class="fill-height">
-          <v-col :cols="3" class="fill-height pa-0"><LeftColumn /></v-col>
-          <v-col :cols="9" class="fill-height pa-0"><MiddleColumn /></v-col>
-        </v-row>
-      </v-container>
+      <div v-if="alert.message" :class="`alert ${alert.type}`">
+        {{ alert.message }}
+      </div>
+      <router-view />
     </v-main>
   </v-app>
 </template>
 
 <script>
-import LeftColumn from "./components/LeftColumn.vue";
-import MiddleColumn from "./components/MiddleColumn.vue";
+import { mapState, mapActions } from "vuex";
+
 export default {
-  name: "App",
-
-  components: {
-    LeftColumn,
-    MiddleColumn,
+  name: "app",
+  computed: {
+    ...mapState({
+      alert: (state) => state.alert,
+    }),
   },
-
-  data: () => ({
-    //
-  }),
+  methods: {
+    ...mapActions({
+      clearAlert: "alert/clear",
+    }),
+  },
+  watch: {
+    $route() {
+      // clear alert on location change
+      this.clearAlert();
+    },
+  },
 };
 </script>

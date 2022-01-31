@@ -2,7 +2,7 @@
   <v-container id="LeftColumn-Header" py-0 pr-0 mx-0>
     <div>
       <v-toolbar>
-        <v-app-bar-nav-icon />
+        <DropDownMenu />
 
         <v-toolbar-title>Left Column Header</v-toolbar-title>
 
@@ -15,3 +15,15 @@
     </div>
   </v-container>
 </template>
+
+<script>
+import DropDownMenu from "./DropDownMenu.vue";
+
+export default {
+  name: "LeftColumnHeader",
+  components: {
+    DropDownMenu,
+  },
+};
+</script>
+
