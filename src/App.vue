@@ -1,9 +1,15 @@
 <template>
   <v-app>
     <v-main>
-      <div v-if="alert.message" :class="`alert ${alert.type}`">
+      <v-snackbar v-model="showSnackBar">
         {{ alert.message }}
-      </div>
+        <template v-slot:action="{ attrs }">
+          <v-btn color="pink" text v-bind="attrs" @click="clearAlert">
+            Close
+          </v-btn>
+        </template>
+      </v-snackbar>
+
       <router-view />
     </v-main>
   </v-app>
@@ -18,6 +24,14 @@ export default {
     ...mapState({
       alert: (state) => state.alert,
     }),
+    showSnackBar: {
+      get: function () {
+        return this.alert.message ? true : false;
+      },
+      set: function (newValue) {
+        return newValue;
+      },
+    },
   },
   methods: {
     ...mapActions({

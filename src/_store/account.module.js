@@ -40,6 +40,7 @@ const actions = {
                     })
                 },
                 error => {
+                    console.log(error)
                     commit('registerFailure', error);
                     dispatch('alert/error', error, { root: true });
                 }
