@@ -15,7 +15,7 @@
             <v-btn
               icon
               @click.prevent="disconnect"
-              :disabled="!isWebSocketConnected"
+              :disabled="!isConnected"
             >
               <v-icon v-bind="attrs" v-on="on">mdi-logout</v-icon>
             </v-btn>
@@ -28,7 +28,7 @@
             <v-btn
               icon
               @click.prevent="connect"
-              :disabled="isWebSocketConnected"
+              :disabled="isConnected"
             >
               <v-icon v-bind="attrs" v-on="on">mdi-connection</v-icon>
             </v-btn>
@@ -49,49 +49,16 @@
 </template>
 
 <script>
-import SockJS from "sockjs-client";
-import Stomp from "webstomp-client";
+import { mapState, mapActions } from "vuex";
 
 export default {
-  data: () => ({ isWebSocketConnected: false }),
-
   methods: {
-    async disconnect() {
-      if (this.stompClient) {
-        this.stompClient.disconnect();
-      }
-      this.isWebSocketConnected = false;
-    },
-    async connect() {
-      // GET request using fetch with error handling
-      this.socket = new SockJS("http://localhost:8000/sessions");
-      this.stompClient = Stomp.over(this.socket);
-      this.stompClient.connect(
-        {},
-        (frame) => {
-          this.isWebSocketConnected = true;
-          console.log(frame);
-          this.stompClient.subscribe("/topic/greetings", (tick) => {
-            console.log(tick);
-            this.received_messages.push(JSON.parse(tick.body).content);
-          });
-        },
-        // if disconnected halftway, this callback will trigger
-        (error) => {
-          console.log(error);
-          const msg = this.isWebSocketConnected
-            ? "Lost established connection"
-            : "Error connecting to server";
-          this.isWebSocketConnected = false;
-          alert(msg);
-        }
-      );
-    },
+    ...mapActions("websocket", ["connect", "disconnect"]),
   },
-
   computed: {
+    ...mapState("websocket", ["isConnecting", "isConnected"]),
     statusColor() {
-      return this.isWebSocketConnected ? "green" : "red";
+      return this.isConnected ? "green" : "red";
     },
   },
 };

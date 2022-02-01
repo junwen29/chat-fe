@@ -7,6 +7,15 @@
       </v-col>
       <v-col />
     </v-row>
+
+    <v-row>
+      <v-col />
+      <v-col>
+        Already have an account?
+        <router-link to="/login">Login</router-link>
+      </v-col>
+      <v-col />
+    </v-row>
   </v-container>
 </template>
 

@@ -74,9 +74,9 @@ export default {
     },
     handleSubmit(e) {
       this.submitted = true;
-      const { username, password } = this;
-      if (username && password) {
-        this.login({ username, password });
+      const { email, password } = this.user;
+      if (email && password) {
+        this.login({ ...this.user });
       }
       e.preventDefault();
     },

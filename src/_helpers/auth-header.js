@@ -8,3 +8,13 @@ export function authHeader() {
         return {};
     }
 }
+
+export function jwtQueryString() {
+    let user = JSON.parse(localStorage.getItem('user'));
+
+    if (user && user.token) {
+        return '?jwt=' + user.token ;
+    } else {
+        return '';
+    }
+}

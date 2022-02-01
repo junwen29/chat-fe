@@ -7,14 +7,14 @@ const state = user
     : { status: {}, user: null };
 
 const actions = {
-    login({ dispatch, commit }, { username, password }) {
-        commit('loginRequest', { username });
+    login({ dispatch, commit }, { email, password }) {
+        commit('loginRequest', { email });
 
-        userService.login(username, password)
+        userService.login(email, password)
             .then(
                 user => {
                     commit('loginSuccess', user);
-                    router.push('/');
+                    router.push('/chats');
                 },
                 error => {
                     commit('loginFailure', error);

@@ -7,6 +7,16 @@
       </v-col>
       <v-col />
     </v-row>
+
+    <v-row>
+      <v-col />
+      <v-col>
+        Do not have an account? 
+        <router-link to="/register">Register</router-link>
+      </v-col>
+      <v-col />
+    </v-row>
+
   </v-container>
 </template>
 
