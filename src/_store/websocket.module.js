@@ -8,7 +8,7 @@ const state = {
 const actions = {
     connect({ dispatch, commit },) {
         commit('connectRequest');
-        
+
         websocketService.connect()
             .then(
                 () => {
@@ -20,12 +20,14 @@ const actions = {
                 }
             );
     },
-    disconnect({ commit }) {
+    disconnect({ dispatch, commit }) {
         websocketService.disconnect();
         commit('disconnect');
+        dispatch('alert/error', 'Web socket connection disconnected', { root: true });
     },
-    failure({ commit }){
+    failure({ dispatch, commit }) {
         commit('connectFailure');
+        dispatch('alert/error', 'Web socket connection failed', { root: true });
     }
 }
 

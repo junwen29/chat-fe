@@ -22,9 +22,14 @@ const actions = {
                 }
             );
     },
-    logout({ commit }) {
+    logout({ dispatch, commit }) {
         userService.logout();
         commit('logout');
+        router.push('/login');
+        setTimeout(() => {
+            // display success message after route change completes
+            dispatch('alert/success', 'Logout successful', { root: true });
+        })
     },
     register({ dispatch, commit }, user) {
         commit('registerRequest', user);
