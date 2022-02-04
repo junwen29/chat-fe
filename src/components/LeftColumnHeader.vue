@@ -1,18 +1,16 @@
 <template>
-  <v-container id="LeftColumn-Header" py-0 pr-0 mx-0>
-    <div>
-      <v-toolbar>
-        <DropDownMenu />
+  <v-container pa-0>
+    <v-toolbar dense flat elevation="1">
+      <DropDownMenu />
 
-        <v-toolbar-title>Left Column Header</v-toolbar-title>
+      <v-toolbar-title>Left Column Header</v-toolbar-title>
 
-        <v-spacer></v-spacer>
+      <v-spacer></v-spacer>
 
-        <v-btn icon>
-          <v-icon>mdi-magnify</v-icon>
-        </v-btn>
-      </v-toolbar>
-    </div>
+      <v-btn icon>
+        <v-icon>mdi-magnify</v-icon>
+      </v-btn>
+    </v-toolbar>
   </v-container>
 </template>
 
@@ -26,4 +24,3 @@ export default {
   },
 };
 </script>
-

@@ -1,10 +1,10 @@
 <template>
-  <v-container id="MiddleColumn-main" ma-0 pa-0 fill-height fluid>
+  <v-container id="MiddleColumn-main" fluid>
     <v-row>
-      <v-col>
-        <MiddleColumnHeader />
-        <MiddleColumnBody />
-      </v-col>
+      <MiddleColumnHeader />
+    </v-row>
+    <v-row>
+      <MiddleColumnBody />
     </v-row>
   </v-container>
 </template>
@@ -22,9 +22,3 @@ export default {
   },
 };
 </script>
-
-<style>
-#MiddleColumn-main {
-  align-items: inherit;
-}
-</style>

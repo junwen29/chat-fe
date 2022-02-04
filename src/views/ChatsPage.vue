@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid ma-0 pa-0 fill-height>
+  <v-container class="fill-height ma-0 pa-0" fluid>
     <v-row class="fill-height">
       <v-col :cols="3" class="fill-height pa-0"><LeftColumn /></v-col>
       <v-col :cols="9" class="fill-height pa-0"><MiddleColumn /></v-col>

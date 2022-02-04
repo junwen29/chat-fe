@@ -1,13 +1,10 @@
 <template>
-  <v-container id="LeftColumn-main" ma-0 pa-0 fluid fill-height>
-    <v-row>
-      <v-col>
-        <LeftColumnHeader />
-        <LeftColumnBody />
-        <v-btn id="NewChatButton" class="mx-2" fab dark large color="purple">
-          <v-icon dark> mdi-message-text </v-icon>
-        </v-btn>
-      </v-col>
+  <v-container id="LeftColumn-main" class="fill-height ma-0 pa-0" fluid>
+    <v-row id="LeftColumn-header">
+      <LeftColumnHeader />
+    </v-row>
+    <v-row id="LeftColumn-body">
+      <LeftColumnBody />
     </v-row>
   </v-container>
 </template>
@@ -27,12 +24,16 @@ export default {
 
 <style>
 #LeftColumn-main {
-  align-items: inherit;
+  align-items: flex-start;
 }
 
-#NewChatButton {
-  position: absolute;
-  left: 1rem;
-  bottom: 1rem;
+#LeftColumn-header {
+  max-height: 48px;
+  margin: 0px;
+}
+
+#LeftColumn-body {
+  height: 100%;
+  margin: 0px;
 }
 </style>

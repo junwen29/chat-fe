@@ -1,6 +1,7 @@
 <template>
-  <v-container py-0>
-    <v-list three-line>
+  <v-container class="pa-0 ma-0 overflow-y-auto" fluid>
+    <v-list three-line style="max-height: 200px">
+      <!-- put max height here to enable scroll bar -->
       <template v-for="(item, index) in items">
         <v-subheader
           v-if="item.header"
@@ -25,6 +26,7 @@
           </v-list-item-content>
         </v-list-item>
       </template>
+      <v-list-item />
     </v-list>
   </v-container>
 </template>
@@ -65,6 +67,20 @@ export default {
       {
         avatar: "https://cdn.vuetifyjs.com/images/lists/5.jpg",
         title: "Recipe to try",
+        subtitle:
+          '<span class="text--primary">Britta Holt</span> &mdash; We should eat this: Grate, Squash, Corn, and tomatillo Tacos.',
+      },
+      { divider: true, inset: true },
+      {
+        avatar: "https://cdn.vuetifyjs.com/images/lists/5.jpg",
+        title: "Recipe to try 2 ",
+        subtitle:
+          '<span class="text--primary">Britta Holt</span> &mdash; We should eat this: Grate, Squash, Corn, and tomatillo Tacos.',
+      },
+      { divider: true, inset: true },
+      {
+        avatar: "https://cdn.vuetifyjs.com/images/lists/5.jpg",
+        title: "Recipe to try 2 ",
         subtitle:
           '<span class="text--primary">Britta Holt</span> &mdash; We should eat this: Grate, Squash, Corn, and tomatillo Tacos.',
       },
