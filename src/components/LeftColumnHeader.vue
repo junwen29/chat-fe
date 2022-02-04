@@ -1,9 +1,11 @@
 <template>
   <v-container pa-0>
-    <v-toolbar dense flat elevation="1">
+    <v-toolbar flat elevation="1" class="pl-4">
       <DropDownMenu />
 
-      <v-toolbar-title>Left Column Header</v-toolbar-title>
+      <v-toolbar-title>
+        {{ isSearchingUsers ? "Select User for a chat" : "Chat Rooms" }}
+      </v-toolbar-title>
 
       <v-spacer></v-spacer>
 
@@ -16,11 +18,15 @@
 
 <script>
 import DropDownMenu from "./DropDownMenu.vue";
+import { mapState } from "vuex";
 
 export default {
   name: "LeftColumnHeader",
   components: {
     DropDownMenu,
+  },
+  computed: {
+    ...mapState("chat", ["isSearchingUsers"]),
   },
 };
 </script>

@@ -1,7 +1,17 @@
 <template>
   <v-container id="MiddleColumn-header" pa-0 fluid>
-    <v-toolbar dense flat elevation="1">
-      <v-toolbar-title>Middle Column Header</v-toolbar-title>
+    <v-toolbar flat elevation="1">
+      <v-avatar>
+        <v-img
+          :src="selectedUser.avatar"
+          v-if="selectedUser && selectedUser.avatar"
+        ></v-img>
+      </v-avatar>
+
+      <v-toolbar-title v-if="selectedUser && selectedUser.title" class="pl-4">
+        <p class="pa-0 ma-0 text-h6" v-html="selectedUser.title"></p>
+        <p class="pa-0 ma-0 text-subtitle-1" v-html="selectedUser.subtitle"></p>
+      </v-toolbar-title>
 
       <v-spacer></v-spacer>
 
@@ -47,6 +57,7 @@ export default {
   },
   computed: {
     ...mapState("websocket", ["isConnecting", "isConnected"]),
+    ...mapState("chat", ["selectedUser"]),
     statusColor() {
       return this.isConnected ? "green" : "red";
     },
@@ -56,6 +67,6 @@ export default {
 
 <style>
 #MiddleColumn-header {
-  max-height: 48px;
+  max-height: 64px;
 }
 </style>

@@ -1,9 +1,9 @@
 <template>
-  <v-container id="MiddleColumn-main" fluid>
+  <v-container id="MiddleColumn-main" fluid class="fill-height">
     <v-row>
       <MiddleColumnHeader />
     </v-row>
-    <v-row>
+    <v-row class="fill-height">
       <MiddleColumnBody />
     </v-row>
   </v-container>

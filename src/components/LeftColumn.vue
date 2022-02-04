@@ -28,7 +28,7 @@ export default {
 }
 
 #LeftColumn-header {
-  max-height: 48px;
+  max-height: 64px;
   margin: 0px;
 }
 

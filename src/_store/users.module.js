@@ -1,7 +1,8 @@
 import { userService } from '../_services';
+import _ from 'lodash';
 
 const state = {
-    all: {}
+    all: {},
 };
 
 const actions = {
@@ -12,6 +13,7 @@ const actions = {
             .then(
                 users => commit('getAllSuccess', users),
                 error => commit('getAllFailure', error)
+
             );
     },
 
@@ -23,7 +25,7 @@ const actions = {
                 () => commit('deleteSuccess', id),
                 error => commit('deleteFailure', { id, error: error.toString() })
             );
-    }
+    },
 };
 
 const mutations = {
@@ -31,7 +33,23 @@ const mutations = {
         state.all = { loading: true };
     },
     getAllSuccess(state, users) {
-        state.all = { items: users };
+        let arr = [];
+        const d = ({ divider: true, inset: true });
+
+        // process backend data and add divider items
+        _.each(users, (u) => {
+            const u1 = ({
+                id: u.id,
+                avatar: u.avatarUrl,
+                title: u.title,
+                subtitle: JSON.parse(u.online) ? '<span class="blue--text text--lighten-1">Online</span>' : u.lastSeen
+            });
+            arr = _.concat(arr, u1, d)
+        });
+
+        state.all = {
+            items: arr
+        };
     },
     getAllFailure(state, error) {
         state.all = { error };
