@@ -4,7 +4,7 @@ import userService from './user.service';
 const apiUrl = process.env.VUE_APP_API_BASE_URL;
 
 export const chatService = {
-    getMessageGroups,
+    getMessageGroups, sendMessage
 }
 
 function getMessageGroups(selectedUser) {
@@ -14,6 +14,17 @@ function getMessageGroups(selectedUser) {
     };
 
     return fetch(`${apiUrl}/chats/rooms/${selectedUser.id}`, requestOptions).then(handleResponse);
+}
+
+function sendMessage(message, recepientId) {
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message, recepientId })
+    };
+
+    return fetch(`${apiUrl}/users/authenticate`, requestOptions)
+        .then(handleResponse);
 }
 
 function handleResponse(response) {

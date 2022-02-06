@@ -9,11 +9,12 @@ export function authHeader() {
     }
 }
 
+// used for adding jwt as a string to the requestURL of websocket connection
 export function jwtQueryString() {
     let user = JSON.parse(localStorage.getItem('user'));
 
     if (user && user.token) {
-        return '?jwt=' + user.token ;
+        return '?jwt=' + user.token;
     } else {
         return '';
     }
