@@ -78,6 +78,7 @@ const mutations = {
 
     setSelectedUser(state, user) {
         state.selectedUser = user;
+        state.isSearchingUsers = false; // set this to reset left column navigation
     },
 
     getMessageGroups(state) {
