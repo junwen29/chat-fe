@@ -1,7 +1,9 @@
+import { chatService } from '../_services';
+
 const state = {
     isSearchingUsers: false,
     selectedUser: null,
-    chatMessages: [
+    chatRooms: [
         { header: "Today" },
         {
             avatar: "https://cdn.vuetifyjs.com/images/lists/1.jpg",
@@ -35,7 +37,8 @@ const state = {
             subtitle:
                 '<span class="text--primary">Britta Holt</span> &mdash; We should eat this: Grate, Squash, Corn, and tomatillo Tacos.',
         },
-    ]
+    ],
+    messageGroups: {}, // based on the selected chat room / user
 }
 
 const actions = {
@@ -47,20 +50,48 @@ const actions = {
     clickedBackButton({ commit }) {
         commit('clickedBackButton')
     },
+
     setSelectedUser({ commit }, user) {
         commit('setSelectedUser', user);
-    }
+    },
+
+    getMessageGroups({ commit }, selectedUser) {
+        commit('getMessageGroups');
+
+        // selected user should not be null here. 
+        chatService.getMessageGroups(selectedUser)
+            .then(
+                messageGroups => commit('getMessageGroupsSuccess', messageGroups),
+                error => commit('getMessageGroupsFailure', error)
+            );
+    },
 }
 
 const mutations = {
     clickedNewChatButton(state) {
         state.isSearchingUsers = true;
     },
+
     clickedBackButton(state) {
         state.isSearchingUsers = false;
     },
+
     setSelectedUser(state, user) {
         state.selectedUser = user;
+    },
+
+    getMessageGroups(state) {
+        state.messageGroups = { loading: true };
+    },
+
+    getMessageGroupsSuccess(state, messageGroups) {
+        state.all = {
+            items: messageGroups
+        };
+    },
+
+    getMessageGroupsFailure(state, error) {
+        state.messageGroups = { error };
     },
 }
 

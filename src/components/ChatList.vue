@@ -1,6 +1,6 @@
 <template>
   <v-list id="chat-list" three-line>
-    <template v-for="(item, index) in chatMessages">
+    <template v-for="(item, index) in chatRooms">
       <v-subheader
         v-if="item.header"
         :key="item.header"
@@ -34,7 +34,7 @@ import { mapState } from "vuex";
 export default {
   name: "chat-list",
   computed: {
-    ...mapState("chat", ["chatMessages"]),
+    ...mapState("chat", ["chatRooms"]),
   },
 };
 </script>

@@ -1,16 +1,18 @@
 <template>
   <v-container id="MiddleColumn-body" fluid class="fill-height">
-    <div id="MessageList">hello</div>
+    <MessageGroupList />
     <MiddleColumnFooter />
   </v-container>
 </template>
 
 <script>
 import MiddleColumnFooter from "./MiddleColumnFooter";
+import MessageGroupList from "./MessageGroupList";
 
 export default {
   components: {
     MiddleColumnFooter,
+    MessageGroupList,
   },
 };
 </script>
@@ -20,12 +22,7 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-
-#MessageList {
-  overflow-y: overlay;
-  overflow-x: hidden;
-  flex: 1;
-  width: 100%;
+  background-color: #fafafa !important;
+  border-color: #fafafa !important;
 }
 </style>
