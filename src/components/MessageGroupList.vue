@@ -38,7 +38,7 @@ export default {
   background-color: transparent;
   overflow-y: scroll;
   overflow-x: hidden;
-  max-height: 75vh; // take 75% view height for scrolling simplicity
+  max-height: 80vh; // take 75% view height for scrolling simplicity
   width: 100%;
 }
 
