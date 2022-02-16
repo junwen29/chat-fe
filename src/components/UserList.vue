@@ -20,7 +20,7 @@
       <v-list-item
         v-else
         :key="item.title"
-        @click.prevent="setSelectedUser(item)"
+        @click.prevent="() => setSelectedUser(item)"
       >
         <v-list-item-avatar>
           <v-img :src="item.avatar"></v-img>

@@ -2,15 +2,12 @@
   <v-container id="MiddleColumn-header" pa-0 fluid>
     <v-toolbar flat elevation="1">
       <v-avatar>
-        <v-img
-          :src="selectedUser.avatar"
-          v-if="selectedUser && selectedUser.avatar"
-        ></v-img>
+        <v-img :src="chatRoomAvatar" v-if="chatRoomAvatar"></v-img>
       </v-avatar>
 
-      <v-toolbar-title v-if="selectedUser && selectedUser.title" class="pl-4">
-        <p class="pa-0 ma-0 text-h6" v-html="selectedUser.title"></p>
-        <p class="pa-0 ma-0 text-subtitle-1" v-html="selectedUser.subtitle"></p>
+      <v-toolbar-title v-if="chatRoomTitle" class="pl-4">
+        <p class="pa-0 ma-0 text-h6" v-html="chatRoomTitle"></p>
+        <p class="pa-0 ma-0 text-subtitle-1" v-html="chatRoomSubtitle"></p>
       </v-toolbar-title>
 
       <v-spacer></v-spacer>
@@ -53,7 +50,28 @@ export default {
   },
   computed: {
     ...mapState("websocket", ["isConnecting", "isConnected"]),
-    ...mapState("chat", ["selectedUser"]),
+    ...mapState("chat", ["selectedUser", "selectedChatRoom"]),
+    chatRoomTitle() {
+      if (this.selectedChatRoom && this.selectedChatRoom.title) {
+        return this.selectedChatRoom.title;
+      } else if (this.selectedUser && this.selectedUser.title) {
+        return this.selectedUser.title;
+      } else return "";
+    },
+    chatRoomSubtitle() {
+      if (this.selectedChatRoom && this.selectedChatRoom.subtitle) {
+        return this.selectedChatRoom.subtitle;
+      } else if (this.selectedUser && this.selectedUser.subtitle) {
+        return this.selectedUser.subtitle;
+      } else return "";
+    },
+    chatRoomAvatar() {
+      if (this.selectedChatRoom && this.selectedChatRoom.avatar) {
+        return this.selectedChatRoom.avatar;
+      } else if (this.selectedUser && this.selectedUser.avatar) {
+        return this.selectedUser.avatar;
+      } else return "";
+    },
   },
 };
 </script>

@@ -32,9 +32,9 @@
 import { mapState } from "vuex";
 
 export default {
-  name: "chat-list",
+  name: "chat-room-list",
   computed: {
-    ...mapState("chat", ["chatRooms"]),
+    ...mapState("chat", ["chatRooms", "chatRooms1"]),
   },
 };
 </script>

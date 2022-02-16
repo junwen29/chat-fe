@@ -2,7 +2,7 @@
   <v-container class="pa-0 ma-0 overflow-y-auto" fluid>
     <UserList v-if="isSearchingUsers" />
 
-    <ChatList v-else />
+    <ChatRoomList v-else />
 
     <v-card class="fab-card">
       <v-card-text class="fab-card-text">
@@ -26,14 +26,14 @@
 </template>
 
 <script>
-import ChatList from "./ChatList";
+import ChatRoomList from "./ChatRoomList";
 import UserList from "./UserList";
 import { mapActions, mapState } from "vuex";
 
 export default {
   name: "left-column-body",
   components: {
-    ChatList,
+    ChatRoomList,
     UserList,
   },
   methods: {
