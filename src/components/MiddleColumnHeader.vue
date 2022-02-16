@@ -15,10 +15,6 @@
 
       <v-spacer></v-spacer>
 
-      <v-badge bordered :color="statusColor" overlap dot>
-        <v-icon color="grey lighten-1" large> mdi-account </v-icon>
-      </v-badge>
-
       <v-tooltip bottom>
         <template v-slot:activator="{ on, attrs }">
           <v-btn icon @click.prevent="disconnect" :disabled="!isConnected">
@@ -41,26 +37,23 @@
         <v-icon>mdi-magnify</v-icon>
       </v-btn>
 
-      <v-btn icon>
-        <v-icon>mdi-dots-vertical</v-icon>
-      </v-btn>
+      <UserAvatarMenu />
     </v-toolbar>
   </v-container>
 </template>
 
 <script>
 import { mapState, mapActions } from "vuex";
+import UserAvatarMenu from "./UserAvatarMenu.vue";
 
 export default {
+  components: { UserAvatarMenu },
   methods: {
     ...mapActions("websocket", ["connect", "disconnect"]),
   },
   computed: {
     ...mapState("websocket", ["isConnecting", "isConnected"]),
     ...mapState("chat", ["selectedUser"]),
-    statusColor() {
-      return this.isConnected ? "green" : "red";
-    },
   },
 };
 </script>
