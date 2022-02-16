@@ -14,6 +14,8 @@ const actions = {
             .then(
                 user => {
                     commit('loginSuccess', user);
+                    // connect to chat ms web socket
+                    dispatch('websocket/connect', '', { root: true })
                     router.push('/chats');
                 },
                 error => {
@@ -29,6 +31,8 @@ const actions = {
         setTimeout(() => {
             // display success message after route change completes
             dispatch('alert/success', 'Logout successful', { root: true });
+            // disconnect to chat ms web socket
+            dispatch('websocket/disconnect', '', { root: true })
         })
     },
     register({ dispatch, commit }, user) {

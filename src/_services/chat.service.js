@@ -1,5 +1,5 @@
 import { authHeader } from '../_helpers';
-import userService from './user.service';
+import { userService } from './user.service';
 
 const apiUrl = process.env.VUE_APP_API_BASE_URL;
 
