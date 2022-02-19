@@ -1,13 +1,17 @@
 <template>
   <v-container
-    v-if="all.loading"
+    v-if="all.loading || all.error"
     fluid
     class="fill-height"
-    style="width: 50%; margin: auto"
+    style="width: 50%; margin: auto; justify-content: center"
   >
-    <v-progress-circular indeterminate color="primary"></v-progress-circular>
+    <v-progress-circular
+      indeterminate
+      color="primary"
+      v-if="all.loading"
+    ></v-progress-circular>
+    <span v-else-if="all.error">Unable to fetch users result</span>
   </v-container>
-  <span v-else-if="all.error">Unable to fetch users result</span>
 
   <v-list id="user-list" two-line v-else>
     <template v-for="(item, index) in all.items">

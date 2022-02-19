@@ -1,5 +1,6 @@
 import { chatService } from '../_services';
 import { createChatRoomsGroup } from "../_mock";
+import _ from 'lodash';
 
 const state = {
     selectedChatRoom: {},
@@ -14,7 +15,7 @@ const actions = {
         chatService.getChatRooms()
             .then(
                 chatRooms => commit('getChatRoomsSuccess', chatRooms),
-                error => commit('getMessageGroupsFailure', error)
+                error => commit('getChatRoomsFailure', error)
             );
     },
 
@@ -33,17 +34,31 @@ const actions = {
 
 const mutations = {
     getChatRooms(state) {
-        state.chatRooms1 = { loading: true };
+        state.chatRooms = { loading: true };
     },
 
+    // transform results from backend and add headers/dividers accordingly
     getChatRoomsSuccess(state, chatRooms) {
-        state.chatRooms1 = {
-            items: chatRooms
+        let arr = [];
+        const d = ({ divider: true, inset: true });
+
+        _.each(chatRooms, (room, index) => {
+            const r1 = ({
+                id: room.id,
+                avatar: `https://cdn.vuetifyjs.com/images/lists/${++index}.jpg`,
+                title: `<span class="text--primary">${room.title}</span>`,
+                subtitle: room.lastMessage,
+            });
+            arr = _.concat(arr, r1, d)
+        });
+
+        state.chatRooms = {
+            items: arr
         };
     },
 
     getChatRoomsFailure(state, error) {
-        state.chatRooms1 = { error };
+        state.chatRooms = { error };
     },
 
     getChatRoomWithSelectedUser(state) {

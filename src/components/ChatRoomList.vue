@@ -1,6 +1,20 @@
 <template>
-  <v-list id="chat-list" three-line>
-    <template v-for="(item, index) in chatRooms">
+  <v-container
+    v-if="chatRooms.loading || chatRooms.error"
+    fluid
+    class="fill-height"
+    style="width: 50%; margin: auto; justify-content: center"
+  >
+    <v-progress-circular
+      indeterminate
+      color="primary"
+      v-if="chatRooms.loading"
+    ></v-progress-circular>
+    <span v-else-if="chatRooms.error">Unable to fetch chat rooms result</span>
+  </v-container>
+
+  <v-list id="chat-room-list" three-line v-else>
+    <template v-for="(item, index) in chatRooms.items">
       <v-subheader
         v-if="item.header"
         :key="item.header"
@@ -29,18 +43,24 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapActions } from "vuex";
 
 export default {
   name: "chat-room-list",
   computed: {
-    ...mapState("chatRooms", ["chatRooms", "chatRooms1"]),
+    ...mapState("chatRooms", ["chatRooms"]),
+  },
+  methods: {
+    ...mapActions("chatRooms", ["getChatRooms"]),
+  },
+  mounted: function () {
+    this.getChatRooms();
   },
 };
 </script>
 
 <style lang="scss" scoped>
-#chat-list {
+#chat-room-list {
   max-height: 200px;
   padding-left: 4px;
 }

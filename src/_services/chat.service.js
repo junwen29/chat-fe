@@ -16,13 +16,14 @@ function getChatRoomWithSelectedUser(user) {
     return fetch(`${apiUrl}/chats/rooms?userId=${user.id}`, requestOptions).then(handleResponse);
 }
 
-function getChatRooms() {
+async function getChatRooms() {
     const requestOptions = {
         method: 'GET',
         headers: authHeader(),
+        timeout: 3000
     };
 
-    return fetch(`${apiUrl}/chats/rooms`, requestOptions).then(handleResponse);
+    return await fetch(`${apiUrl}/chats/rooms`, requestOptions).then(handleResponse);
 }
 
 function getMessageGroups(selectedUser) {
