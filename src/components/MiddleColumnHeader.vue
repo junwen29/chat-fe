@@ -50,7 +50,8 @@ export default {
   },
   computed: {
     ...mapState("websocket", ["isConnecting", "isConnected"]),
-    ...mapState("chat", ["selectedUser", "selectedChatRoom"]),
+    ...mapState("chat", ["selectedUser"]),
+    ...mapState("chatRooms", ["selectedChatRoom"]),
     chatRoomTitle() {
       if (this.selectedChatRoom && this.selectedChatRoom.title) {
         return this.selectedChatRoom.title;

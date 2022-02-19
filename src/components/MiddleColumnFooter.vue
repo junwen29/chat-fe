@@ -45,11 +45,11 @@ export default {
     icon() {
       return this.icons[this.iconIndex];
     },
-    ...mapState("chat", ["selectedChatRoom"]),
+    ...mapState("chatRooms", ["selectedChatRoom"]),
   },
 
   methods: {
-    ...mapActions("chat", ["sendMessage"]),
+    ...mapActions("chatMessages", ["sendMessage"]),
     toggleMarker() {
       this.marker = !this.marker;
     },

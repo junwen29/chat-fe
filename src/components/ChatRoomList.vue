@@ -34,7 +34,7 @@ import { mapState } from "vuex";
 export default {
   name: "chat-room-list",
   computed: {
-    ...mapState("chat", ["chatRooms", "chatRooms1"]),
+    ...mapState("chatRooms", ["chatRooms", "chatRooms1"]),
   },
 };
 </script>

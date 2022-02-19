@@ -1,11 +1,8 @@
 import { chatService } from '../_services';
-import { createChatRoomsGroup } from "../_mock";
 
 const state = {
     isSearchingUsers: false,
     selectedUser: null,
-    selectedChatRoom: {},
-    chatRooms: createChatRoomsGroup("Today"),
     messageGroups: {}, // based on the selected chat room / user
 }
 
@@ -21,7 +18,7 @@ const actions = {
 
     setSelectedUser({ dispatch, commit }, user) {
         commit('setSelectedUser', user);
-        dispatch('chat/getChatRoomWithSelectedUser', user, { root: true });
+        dispatch('chatRooms/getChatRoomWithSelectedUser', user, { root: true });
     },
 
     getMessageGroups({ commit }, selectedUser) {
@@ -34,41 +31,6 @@ const actions = {
                 error => commit('getMessageGroupsFailure', error)
             );
     },
-
-    getChatRooms({ commit }) {
-        commit('getChatRooms');
-
-        // selected user should not be null here. 
-        chatService.getChatRooms()
-            .then(
-                chatRooms => commit('getChatRoomsSuccess', chatRooms),
-                error => commit('getMessageGroupsFailure', error)
-            );
-    },
-
-    getChatRoomWithSelectedUser({ commit }, user) {
-        commit('getChatRoomWithSelectedUser');
-        console.log(user);
-
-        // selected user should not be null here. 
-        chatService.getChatRoomWithSelectedUser(user)
-            .then(
-                // there should only be 1 chat room returned
-                chatRooms => commit('getChatRoomWithSelectedUserSuccess', chatRooms[0]),
-                error => commit('getChatRoomWithSelectedUserFailure', error)
-            );
-    },
-
-    sendMessage({ commit }, request) {
-        const { message, selectedChatRoom } = request
-        console.log({ message, selectedChatRoom })
-        commit('sendMessage', message, selectedChatRoom);
-        chatService.sendMessage(message, selectedChatRoom)
-            .then(
-                message => commit('sendMessageSuccess', message),
-                error => commit('sendMessageFailure', error)
-            )
-    }
 }
 
 const mutations = {
@@ -97,44 +59,6 @@ const mutations = {
 
     getMessageGroupsFailure(state, error) {
         state.messageGroups = { error };
-    },
-
-    getChatRooms(state) {
-        state.chatRooms1 = { loading: true };
-    },
-
-    getChatRoomsSuccess(state, chatRooms) {
-        state.chatRooms1 = {
-            items: chatRooms
-        };
-    },
-
-    getChatRoomsFailure(state, error) {
-        state.chatRooms1 = { error };
-    },
-
-    getChatRoomWithSelectedUser(state) {
-        state.selectedChatRoom = {
-            loading: true
-        }
-    },
-
-    getChatRoomWithSelectedUserSuccess(state, chatRoom) {
-        state.selectedChatRoom = { chatRoom };
-    },
-
-    getChatRoomWithSelectedUserFailure(state, error) {
-        state.selectedChatRoom = { error };
-    },
-
-    sendMessage(state) {
-        state.sendMessage = { loading: true }
-    },
-    sendMessageSuccess(state, message) {
-        state.sendMessage = { message }
-    },
-    sendMessageFailure(state, error) {
-        state.sendMessage = { error }
     },
 }
 
