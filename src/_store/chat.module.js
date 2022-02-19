@@ -57,6 +57,17 @@ const actions = {
                 chatRooms => commit('getChatRoomWithSelectedUserSuccess', chatRooms[0]),
                 error => commit('getChatRoomWithSelectedUserFailure', error)
             );
+    },
+
+    sendMessage({ commit }, request) {
+        const { message, selectedChatRoom } = request
+        console.log({ message, selectedChatRoom })
+        commit('sendMessage', message, selectedChatRoom);
+        chatService.sendMessage(message, selectedChatRoom)
+            .then(
+                message => commit('sendMessageSuccess', message),
+                error => commit('sendMessageFailure', error)
+            )
     }
 }
 
@@ -114,7 +125,17 @@ const mutations = {
 
     getChatRoomWithSelectedUserFailure(state, error) {
         state.selectedChatRoom = { error };
-    }
+    },
+
+    sendMessage(state) {
+        state.sendMessage = { loading: true }
+    },
+    sendMessageSuccess(state, message) {
+        state.sendMessage = { message }
+    },
+    sendMessageFailure(state, error) {
+        state.sendMessage = { error }
+    },
 }
 
 export const chat = {

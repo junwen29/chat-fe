@@ -34,15 +34,16 @@ function getMessageGroups(selectedUser) {
     return fetch(`${apiUrl}/chats/rooms/${selectedUser.id}`, requestOptions).then(handleResponse);
 }
 
-function sendMessage(message, recipientId) {
+function sendMessage(message, selectedChatRoom) {
+    console.log({ message, selectedChatRoom })
+    const chatRoomId = selectedChatRoom.id
     const requestOptions = {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message, recipientId })
+        headers: { 'Content-Type': 'application/json', ...authHeader() },
+        body: JSON.stringify({ message, chatRoomId })
     };
 
-    return fetch(`${apiUrl}/users/authenticate`, requestOptions)
-        .then(handleResponse);
+    return fetch(`${apiUrl}/chats/messages`, requestOptions).then(handleResponse);
 }
 
 function handleResponse(response) {

@@ -12,7 +12,7 @@
         label="Message"
         type="text"
         @click:append="toggleMarker"
-        @click:append-outer="sendMessage"
+        @click:append-outer="(event) => send(event)"
         @click:prepend="changeIcon"
         @click:clear="clearMessage"
       ></v-text-field>
@@ -20,6 +20,8 @@
   </div>
 </template>
 <script>
+import { mapActions, mapState } from "vuex";
+
 export default {
   data: () => ({
     password: "Password",
@@ -43,14 +45,21 @@ export default {
     icon() {
       return this.icons[this.iconIndex];
     },
+    ...mapState("chat", ["selectedChatRoom"]),
   },
 
   methods: {
+    ...mapActions("chat", ["sendMessage"]),
     toggleMarker() {
       this.marker = !this.marker;
     },
-    sendMessage() {
+    send(event) {
+      console.log(event);
       this.resetIcon();
+      this.sendMessage({
+        message: this.message,
+        selectedChatRoom: this.selectedChatRoom.chatRoom,
+      });
       this.clearMessage();
     },
     clearMessage() {
