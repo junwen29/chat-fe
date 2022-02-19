@@ -4,7 +4,7 @@ import { userService } from './user.service';
 const apiUrl = process.env.VUE_APP_API_BASE_URL;
 
 export const chatService = {
-    getMessageGroups, sendMessage, getChatRooms, getChatRoomWithSelectedUser
+    getChatRoomMessages, sendMessage, getChatRooms, getChatRoomWithSelectedUser
 }
 
 function getChatRoomWithSelectedUser(user) {
@@ -26,13 +26,13 @@ async function getChatRooms() {
     return await fetch(`${apiUrl}/chats/rooms`, requestOptions).then(handleResponse);
 }
 
-function getMessageGroups(selectedUser) {
+function getChatRoomMessages(chatRoomId) {
     const requestOptions = {
         method: 'GET',
         headers: authHeader(),
     };
 
-    return fetch(`${apiUrl}/chats/rooms/${selectedUser.id}`, requestOptions).then(handleResponse);
+    return fetch(`${apiUrl}/chats/rooms/${chatRoomId}/messages`, requestOptions).then(handleResponse);
 }
 
 function sendMessage(message, selectedChatRoom) {

@@ -30,6 +30,13 @@ const actions = {
                 error => commit('getChatRoomWithSelectedUserFailure', error)
             );
     },
+
+    selectChatRoom({ commit, dispatch }, chatRoom) {
+        commit('selectChatRoom', chatRoom);
+        
+        // download the selected chat room messages after selecting the chat room
+        dispatch('chatMessages/getChatRoomMessage', chatRoom.id, { root: true })
+    }
 }
 
 const mutations = {
@@ -46,8 +53,10 @@ const mutations = {
             const r1 = ({
                 id: room.id,
                 avatar: `https://cdn.vuetifyjs.com/images/lists/${++index}.jpg`,
-                title: `<span class="text--primary">${room.title}</span>`,
-                subtitle: room.lastMessage,
+                title: room.title && `<h4>${room.title}</h4>`,
+                subtitle: room.lastMessage && `<span class="text--primary">${room.lastMessage}</span>`,
+                time: room.lastMessageAt,
+                unreadMessageCount: 8
             });
             arr = _.concat(arr, r1, d)
         });
@@ -61,6 +70,9 @@ const mutations = {
         state.chatRooms = { error };
     },
 
+    // after clicking and selecting the user,
+    // get the chat room associated with the selected user 
+    // and set it as selected chat room
     getChatRoomWithSelectedUser(state) {
         state.selectedChatRoom = {
             loading: true
@@ -74,6 +86,10 @@ const mutations = {
     getChatRoomWithSelectedUserFailure(state, error) {
         state.selectedChatRoom = { error };
     },
+
+    selectChatRoom(state, chatRoom) {
+        state.selectedChatRoom = { chatRoom }
+    }
 }
 
 export const chatRooms = {

@@ -1,18 +1,33 @@
 import { chatService } from '../_services';
 
 const state = {
-    messageGroups: {}, // based on the selected chat room / user
+    selectedChatRoomMessages: {}, // based on the selected chat room / user
 }
 
 const actions = {
-    sendMessage({ commit }, request) {
+    sendMessage({ commit, dispatch }, request) {
         const { message, selectedChatRoom } = request
-        console.log({ message, selectedChatRoom })
+
         commit('sendMessage', message, selectedChatRoom);
+
         chatService.sendMessage(message, selectedChatRoom)
             .then(
-                message => commit('sendMessageSuccess', message),
+                message => {
+                    commit('sendMessageSuccess', message)
+                    dispatch('chatRooms/getChatRooms', '', { root: true }) // reload the chat rooms after sending message
+                },
                 error => commit('sendMessageFailure', error)
+            )
+    },
+    getChatRoomMessage({ commit }, chatRoomId) {
+        commit('getChatRoomMessages');
+
+        chatService.getChatRoomMessages(chatRoomId)
+            .then(
+                message => {
+                    commit('getChatRoomMessagesSuccess', message)
+                },
+                error => commit('getChatRoomMessagesFailure', error)
             )
     }
 }
@@ -26,6 +41,30 @@ const mutations = {
     },
     sendMessageFailure(state, error) {
         state.sendMessage = { error }
+    },
+    getChatRoomMessages(state) {
+        state.selectedChatRoomMessages = { loading: true }
+    },
+    getChatRoomMessagesSuccess(state, messageGroups) {
+        state.selectedChatRoomMessages = {
+            messageGroups: messageGroups.map(mg => {
+                return ({
+                    date: mg.date,
+                    messages: mg.messages.map(m => {
+                        return ({
+                            id: m.id,
+                            content: m.content,
+                            time: m.createdAt,
+                            avatar: m.avatar,
+                            from: m.from
+                        })
+                    })
+                })
+            })
+        }
+    },
+    getChatRoomMessagesFailure(state, error) {
+        state.selectedChatRoomMessages = { error }
     },
 }
 
