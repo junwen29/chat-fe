@@ -33,9 +33,9 @@ const actions = {
 
     selectChatRoom({ commit, dispatch }, chatRoom) {
         commit('selectChatRoom', chatRoom);
-        
+
         // download the selected chat room messages after selecting the chat room
-        dispatch('chatMessages/getChatRoomMessage', chatRoom.id, { root: true })
+        dispatch('chatMessages/getChatRoomMessages', chatRoom.id, { root: true })
     }
 }
 

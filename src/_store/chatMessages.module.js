@@ -14,12 +14,16 @@ const actions = {
             .then(
                 message => {
                     commit('sendMessageSuccess', message)
-                    dispatch('chatRooms/getChatRooms', '', { root: true }) // reload the chat rooms after sending message
+                    // reload the chat rooms after sending message
+                    dispatch('chatRooms/getChatRooms', '', { root: true })
+                    // reload the selected chat room's messages after sending message
+                    console.log(selectedChatRoom)
+                    dispatch('chatMessages/getChatRoomMessages', selectedChatRoom.id, { root: true })
                 },
                 error => commit('sendMessageFailure', error)
             )
     },
-    getChatRoomMessage({ commit }, chatRoomId) {
+    getChatRoomMessages({ commit }, chatRoomId) {
         commit('getChatRoomMessages');
 
         chatService.getChatRoomMessages(chatRoomId)
