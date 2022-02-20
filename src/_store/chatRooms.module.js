@@ -47,7 +47,7 @@ const mutations = {
     // transform results from backend and add headers/dividers accordingly
     getChatRoomsSuccess(state, chatRooms) {
         let arr = [];
-        const d = ({ divider: true, inset: true });
+        const d = ({ divider: true, inset: false });
 
         _.each(chatRooms, (room, index) => {
             const r1 = ({

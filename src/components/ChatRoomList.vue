@@ -16,14 +16,8 @@
   <v-list id="chat-room-list" three-line v-else>
     <v-list-item-group color="primary" v-model="selectedItem">
       <template v-for="(item, index) in chatRooms.items">
-        <v-subheader
-          v-if="item.header"
-          :key="item.header"
-          v-text="item.header"
-        ></v-subheader>
-
         <v-divider
-          v-else-if="item.divider"
+          v-if="item.divider"
           :key="index"
           :inset="item.inset"
         ></v-divider>
@@ -61,7 +55,7 @@ import { mapState, mapActions } from "vuex";
 export default {
   name: "chat-room-list",
   data: () => ({
-    selectedItem: 1,
+    selectedItem: -1,
   }),
   computed: {
     ...mapState("chatRooms", ["chatRooms", "selectedChatRoom"]),
