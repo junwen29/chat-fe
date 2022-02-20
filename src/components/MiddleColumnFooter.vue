@@ -15,6 +15,7 @@
         @click:append-outer="(event) => send(event)"
         @click:prepend="changeIcon"
         @click:clear="clearMessage"
+        @keydown.enter.prevent="(event) => send(event)"
       ></v-text-field>
     </div>
   </div>
