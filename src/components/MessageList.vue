@@ -58,9 +58,10 @@ export default {
   },
   mounted: function () {
     const el = this.$el.getElementsByClassName("MessageList-bottom")[0];
-
+    // do not use scroll into view as it would cut away the left and middle header components from the visible area
+    // use focus() instead so that visible area does not change.
     if (el) {
-      el.scrollIntoView();
+      el.focus();
     }
   },
 };
