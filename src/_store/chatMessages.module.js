@@ -1,4 +1,5 @@
 import { chatService } from '../_services';
+import { showTodayYesterdayAndDayName } from '../_helpers';
 
 const state = {
     selectedChatRoomMessages: {}, // based on the selected chat room / user
@@ -53,7 +54,7 @@ const mutations = {
         // parse the message groups from backend and transform accordingly
         const transformed = messageGroups.map(mg => {
             return ({
-                date: mg.date,
+                date: showTodayYesterdayAndDayName(mg.date),
                 messages: mg.messages.map(m => {
                     return ({
                         id: m.id,
