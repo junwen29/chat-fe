@@ -19,7 +19,7 @@ const actions = {
             );
     },
 
-    getChatRoomWithSelectedUser({ commit }, user) {
+    getChatRoomWithSelectedUser({ commit, dispatch }, user) {
         commit('getChatRoomWithSelectedUser');
 
         // selected user should not be null here. 
@@ -28,7 +28,8 @@ const actions = {
                 // there should only be 1 chat room returned
                 chatRooms => commit('getChatRoomWithSelectedUserSuccess', chatRooms[0]),
                 error => commit('getChatRoomWithSelectedUserFailure', error)
-            );
+            )
+            .finally(() => dispatch('chatMessages/clear', '', { root: true }));
     },
 
     selectChatRoom({ commit, dispatch }, chatRoom) {
@@ -36,6 +37,8 @@ const actions = {
 
         // download the selected chat room messages after selecting the chat room
         dispatch('chatMessages/getChatRoomMessages', chatRoom.id, { root: true })
+
+
     }
 }
 
