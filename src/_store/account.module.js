@@ -16,7 +16,7 @@ const actions = {
                     commit('loginSuccess', user);
                     // connect to chat ms web socket
                     dispatch('websocket/connect', '', { root: true })
-                    dispatch('chat/getChatRooms', '', { root: true })
+                    dispatch('chatRooms/getChatRooms', '', { root: true })
                     router.push('/chats');
                 },
                 error => {
