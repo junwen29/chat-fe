@@ -14,7 +14,7 @@
   </v-container>
 
   <v-list id="chat-room-list" three-line v-else>
-    <v-list-item-group color="primary" multiple>
+    <v-list-item-group color="primary" v-model="selectedItem">
       <template v-for="(item, index) in chatRooms.items">
         <v-subheader
           v-if="item.header"
@@ -44,7 +44,8 @@
 
           <v-list-item-action>
             <v-list-item-action-text
-              v-text="item.time" class="pb-2"
+              v-text="item.time"
+              class="pb-2"
             ></v-list-item-action-text>
             <v-chip v-text="item.unreadMessageCount"></v-chip>
           </v-list-item-action>
@@ -59,6 +60,9 @@ import { mapState, mapActions } from "vuex";
 
 export default {
   name: "chat-room-list",
+  data: () => ({
+    selectedItem: 1,
+  }),
   computed: {
     ...mapState("chatRooms", ["chatRooms", "selectedChatRoom"]),
   },
