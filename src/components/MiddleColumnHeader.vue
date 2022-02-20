@@ -53,22 +53,27 @@ export default {
     ...mapState("chat", ["selectedUser"]),
     ...mapState("chatRooms", ["selectedChatRoom"]),
     chatRoomTitle() {
-      if (this.selectedChatRoom && this.selectedChatRoom.title) {
-        return this.selectedChatRoom.title;
+      if (this.selectedChatRoom && this.selectedChatRoom.chatRoom) {
+        return (
+          this.selectedChatRoom.chatRoom && this.selectedChatRoom.chatRoom.title
+        );
       } else if (this.selectedUser && this.selectedUser.title) {
         return this.selectedUser.title;
       } else return "";
     },
     chatRoomSubtitle() {
-      if (this.selectedChatRoom && this.selectedChatRoom.subtitle) {
-        return this.selectedChatRoom.subtitle;
+      if (this.selectedChatRoom && this.selectedChatRoom.chatRoom) {
+        return this.selectedChatRoom.chatRoom && "";
       } else if (this.selectedUser && this.selectedUser.subtitle) {
         return this.selectedUser.subtitle;
       } else return "";
     },
     chatRoomAvatar() {
-      if (this.selectedChatRoom && this.selectedChatRoom.avatar) {
-        return this.selectedChatRoom.avatar;
+      if (this.selectedChatRoom && this.selectedChatRoom.chatRoom) {
+        return (
+          this.selectedChatRoom.chatRoom &&
+          this.selectedChatRoom.chatRoom.avatar
+        );
       } else if (this.selectedUser && this.selectedUser.avatar) {
         return this.selectedUser.avatar;
       } else return "";
