@@ -1,18 +1,22 @@
 <template>
   <v-container id="MiddleColumn-body" fluid class="fill-height">
     <MessageGroupList />
-    <MiddleColumnFooter />
+    <MiddleColumnFooter v-if="selectedChatRoom.chatRoom" />
   </v-container>
 </template>
 
 <script>
 import MiddleColumnFooter from "./MiddleColumnFooter";
 import MessageGroupList from "./MessageGroupList";
+import { mapState } from "vuex";
 
 export default {
   components: {
     MiddleColumnFooter,
     MessageGroupList,
+  },
+  computed: {
+    ...mapState("chatRooms", ["selectedChatRoom"]),
   },
 };
 </script>
