@@ -1,6 +1,8 @@
 <template>
   <v-list id="MessageGroupList">
-    <template v-for="(messageGroup, index) in selectedChatRoomMessages.messageGroups">
+    <template
+      v-for="(messageGroup, index) in selectedChatRoomMessages.messageGroups"
+    >
       <!-- for each message group  -->
       <v-list-item :key="index">
         <v-list-item-content>
@@ -18,19 +20,12 @@
 
 <script>
 import MessageList from "./MessageList.vue";
-import { createMessageGroup } from "../_mock";
 import { mapState } from "vuex";
 
 export default {
   components: {
     MessageList,
   },
-  data: () => ({
-    messageGroups: [
-      createMessageGroup("Yesterday", 6),
-      createMessageGroup("Today", 3),
-    ],
-  }),
   computed: {
     ...mapState("chatMessages", ["selectedChatRoomMessages"]),
   },
