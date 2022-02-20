@@ -4,7 +4,7 @@
       <!-- <v-avatar>
         <v-img :src="chatRoomAvatar" v-if="chatRoomAvatar"></v-img>
       </v-avatar> -->
-      <v-avatar color="blue">
+      <v-avatar color="blue" v-if="selectedUser">
         <span class="white--text text-h5">{{ selectedUser.initials }}</span>
       </v-avatar>
 
