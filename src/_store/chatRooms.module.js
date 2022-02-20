@@ -1,10 +1,9 @@
 import { chatService } from '../_services';
-import { createChatRoomsGroup } from "../_mock";
 import _ from 'lodash';
 
 const state = {
     selectedChatRoom: {},
-    chatRooms: createChatRoomsGroup("Today"),
+    chatRooms: {}
 }
 
 const actions = {
@@ -37,8 +36,6 @@ const actions = {
 
         // download the selected chat room messages after selecting the chat room
         dispatch('chatMessages/getChatRoomMessages', chatRoom.id, { root: true })
-
-
     }
 }
 
@@ -52,14 +49,16 @@ const mutations = {
         let arr = [];
         const d = ({ divider: true, inset: false });
 
-        _.each(chatRooms, (room, index) => {
+        _.each(chatRooms, (room) => {
             const r1 = ({
                 id: room.id,
-                avatar: `https://cdn.vuetifyjs.com/images/lists/${++index}.jpg`,
+                avatar: room.avatar,
+                // avatar: `https://cdn.vuetifyjs.com/images/lists/${++index}.jpg`,
                 title: room.title && `<h4>${room.title}</h4>`,
                 subtitle: room.lastMessage && `<span class="text--primary">${room.lastMessage}</span>`,
                 time: room.lastMessageAt,
-                unreadMessageCount: 8
+                unreadMessageCount: 8,
+                initials: room.initials
             });
             arr = _.concat(arr, r1, d)
         });
@@ -92,7 +91,7 @@ const mutations = {
 
     selectChatRoom(state, chatRoom) {
         state.selectedChatRoom = { chatRoom }
-    }
+    },
 }
 
 export const chatRooms = {

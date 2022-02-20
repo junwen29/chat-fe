@@ -27,7 +27,10 @@
         @click.prevent="() => setSelectedUser(item)"
       >
         <v-list-item-avatar>
-          <v-img :src="item.avatar"></v-img>
+          <!-- <v-img :src="item.avatar"></v-img> -->
+          <v-avatar color="blue">
+            <span class="white--text text-h5">{{ item.initials }}</span>
+          </v-avatar>
         </v-list-item-avatar>
 
         <v-list-item-content>

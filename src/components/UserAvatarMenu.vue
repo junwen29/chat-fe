@@ -13,7 +13,7 @@
         <v-card>
           <v-list-item-content class="justify-center">
             <div class="mx-auto text-center">
-              <v-avatar color="brown">
+              <v-avatar color="blue">
                 <span class="white--text text-h5">{{ user.initials }}</span>
               </v-avatar>
               <h3 class="pt-4">{{ user.name }}</h3>

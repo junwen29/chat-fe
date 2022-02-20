@@ -42,7 +42,8 @@ const mutations = {
                 id: u.id,
                 avatar: u.avatarUrl,
                 title: u.title,
-                subtitle: JSON.parse(u.online) ? '<span class="blue--text text--lighten-1">Online</span>' : u.lastSeen
+                subtitle: JSON.parse(u.online) ? '<span class="blue--text text--lighten-1">Online</span>' : u.lastSeen,
+                initials: u.initials
             });
             arr = _.concat(arr, u1, d)
         });

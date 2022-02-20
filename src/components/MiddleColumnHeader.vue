@@ -1,8 +1,11 @@
 <template>
   <v-container id="MiddleColumn-header" pa-0 fluid>
     <v-toolbar flat elevation="1">
-      <v-avatar>
+      <!-- <v-avatar>
         <v-img :src="chatRoomAvatar" v-if="chatRoomAvatar"></v-img>
+      </v-avatar> -->
+      <v-avatar color="blue">
+        <span class="white--text text-h5">{{ selectedUser.initials }}</span>
       </v-avatar>
 
       <v-toolbar-title v-if="chatRoomTitle" class="pl-4">
