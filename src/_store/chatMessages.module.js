@@ -50,21 +50,27 @@ const mutations = {
         state.selectedChatRoomMessages = { loading: true }
     },
     getChatRoomMessagesSuccess(state, messageGroups) {
-        state.selectedChatRoomMessages = {
-            messageGroups: messageGroups.map(mg => {
-                return ({
-                    date: mg.date,
-                    messages: mg.messages.map(m => {
-                        return ({
-                            id: m.id,
-                            content: m.content,
-                            time: m.createdAt,
-                            avatar: m.avatar,
-                            from: m.from
-                        })
+        // parse the message groups from backend and transform accordingly
+        const transformed = messageGroups.map(mg => {
+            return ({
+                date: mg.date,
+                messages: mg.messages.map(m => {
+                    return ({
+                        id: m.id,
+                        content: m.content,
+                        time: m.createdAt,
+                        avatar: m.avatar,
+                        from: m.from
                     })
                 })
             })
+        })
+
+        // add a hidden element for scroll into view later when chat room re-renders after loading recent messsage groups
+        let transformedWithHiddenBottomElement = [...transformed, { messages: [{ bottom: true }] }]
+
+        state.selectedChatRoomMessages = {
+            messageGroups: transformedWithHiddenBottomElement
         }
     },
     getChatRoomMessagesFailure(state, error) {

@@ -2,6 +2,16 @@
   <v-list id="MessageList">
     <template v-for="(message, index) in chatMessages">
       <v-list-item
+        v-if="message.bottom"
+        :key="index"
+        class="MessageList-bottom"
+        style="width: 0; height: 0"
+      >
+        <!-- <v-text-field v-text="'bottom'"></v-text-field> -->
+      </v-list-item>
+
+      <v-list-item
+        v-else
         :key="index"
         :class="message.from === 'Me' ? 'bubble-right' : 'bubble-left'"
       >
@@ -45,6 +55,13 @@ export default {
         `<span class="message-time">${time}</span></span></p>`
       );
     },
+  },
+  mounted: function () {
+    const el = this.$el.getElementsByClassName("MessageList-bottom")[0];
+
+    if (el) {
+      el.scrollIntoView();
+    }
   },
 };
 </script>
@@ -90,7 +107,7 @@ export default {
   text-align: left;
   display: flow-root;
   unicode-bidi: plaintext;
-  padding: 4px 0 ;
+  padding: 4px 0;
 }
 
 .message-meta {
