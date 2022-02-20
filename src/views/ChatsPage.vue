@@ -10,12 +10,22 @@
 <script>
 import LeftColumn from "../components/LeftColumn.vue";
 import MiddleColumn from "../components/MiddleColumn.vue";
+import { mapState, mapActions } from "vuex";
+
 export default {
   name: "ChatsPage",
 
   components: {
     LeftColumn,
     MiddleColumn,
+  },
+  computed: { ...mapState("websocket", ["isConnected"]) },
+  methods: {
+    ...mapActions("websocket", ["connect"]),
+  },
+
+  mounted: function () {
+    !this.isConnected && this.connect();
   },
 };
 </script>
