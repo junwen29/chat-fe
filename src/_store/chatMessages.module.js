@@ -5,6 +5,12 @@ const state = {
     selectedChatRoomMessages: {}, // based on the selected chat room / user
 }
 
+const getDefaultState = () => {
+    return {
+        selectedChatRoomMessages: {}, // based on the selected chat room / user
+    }
+}
+
 const actions = {
     sendMessage({ commit, dispatch }, request) {
         const { message, selectedChatRoom } = request
@@ -34,6 +40,9 @@ const actions = {
                 },
                 error => commit('getChatRoomMessagesFailure', error)
             )
+    },
+    clear({ commit }) {
+        commit('clear');
     }
 }
 
@@ -76,6 +85,11 @@ const mutations = {
     },
     getChatRoomMessagesFailure(state, error) {
         state.selectedChatRoomMessages = { error }
+    },
+    clear(state) {
+        // Merge rather than replace so we don't lose observers
+        // https://github.com/vuejs/vuex/issues/1118
+        Object.assign(state, getDefaultState())
     },
 }
 

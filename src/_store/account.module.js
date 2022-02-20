@@ -34,6 +34,7 @@ const actions = {
             dispatch('alert/success', 'Logout successful', { root: true });
             // disconnect to chat ms web socket
             dispatch('websocket/disconnect', '', { root: true })
+            dispatch('chatMessages/clear', '', { root: true })
         })
     },
     register({ dispatch, commit }, user) {
